@@ -34,28 +34,25 @@
     return  self;
 }
 
-- (void)performStep {
-    LiftAction nextAction = [self.liftBrain generteNextAction];
+- (LiftAction)performStep {
+    LiftAction liftAction = [self.liftBrain generteNextAction];
 //    [Statistics showLiftAction:nextAction];
-    switch (nextAction) {
+    switch (liftAction) {
         case LiftWait:
-            return;
             break;
         case LiftGoUp:
-            return;
             break;
         case LiftGoDown:
-            return;
             break;
-        case LiftOpenDoor: {
+        case LiftOpenDoor:
             [self popPeopleFromLift];
             [self putPeopleToLift];
-        }
             break;
         default:
             assert(@"Error: wrong lift state");
             break;
     }
+    return liftAction;
 }
 
 

@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Lift.h"
+
+@class Lift;
 
 typedef enum : NSUInteger {
     LiftWait,

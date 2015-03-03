@@ -7,6 +7,9 @@
 //
 
 #import "LiftBrain.h"
+#import "HouseMD.h"
+
+#define SKIP_HALF 0
 
 const NSUInteger Ground_Floor = 0;
 
@@ -58,17 +61,23 @@ const NSUInteger Ground_Floor = 0;
             
         case LiftGoUp:
             self.currentFloor++;
-            if ([self requestOnCurrentFloor]) {
-                nextAction = LiftOpenDoor;
-            }
+#if SKIP_HALF
+            if ([self shouldLiftStop])
+#endif
+                if ([self requestOnCurrentFloor]) {
+                    nextAction = LiftOpenDoor;
+                }
             //  else keep moving up
             break;
             
         case LiftGoDown:
             self.currentFloor--;
-            if ([self requestOnCurrentFloor]) {
-                nextAction = LiftOpenDoor;
-            }
+#if SKIP_HALF
+            if ([self shouldLiftStop])
+#endif
+                if ([self requestOnCurrentFloor]) {
+                    nextAction = LiftOpenDoor;
+                }
             //  else keep moving down
             break;
             
@@ -177,6 +186,19 @@ const NSUInteger Ground_Floor = 0;
         }
     }
     return NO;
+}
+
+- (BOOL)shouldLiftStop {
+    BOOL upperHalf = self.currentFloor > ([self.lift.house numberOfFloors] / 2);
+    if (goingDown) {
+        return upperHalf || ![self needGoDown];
+    }
+    else if (goingUP) {
+        return !upperHalf || ![self needGoUp];
+    }
+    else {
+        return YES;
+    }
 }
 
 @end

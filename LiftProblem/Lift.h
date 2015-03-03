@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "LiftBrain.h"
+
 @class HouseMD;
 @class Human;
 @class LiftBrain;
@@ -22,7 +24,7 @@
 
 - (void)addHumanInLift:(Human *)newHuman;
 - (void)addRequest:(NSUInteger)requestFloor;
-- (void)performStep;
+- (LiftAction)performStep;
 
 - (NSUInteger)currentFloor;
 

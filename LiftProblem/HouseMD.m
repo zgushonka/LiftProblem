@@ -8,10 +8,10 @@
 
 #import "HouseMD.h"
 #import "Lift.h"
+#import "LiftBrain.h"
 
 const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
-const NSInteger skipStep = 3; //  0 .. numberOfFloors-1
-
+const NSInteger skipStep = 8; //  0 .. numberOfFloors-1
 
 @interface HouseMD ()
 
@@ -41,8 +41,8 @@ const NSInteger skipStep = 3; //  0 .. numberOfFloors-1
     [self generateNewPeople];
     [self.lift performStep];
     [Statistics showTextHouseStatistic:self];
-    
-    self.currentStep++;    
+
+    self.currentStep++;
 }
 
 - (void)generateNewPeople {
