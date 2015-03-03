@@ -7,21 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HouseMD.h"
-#import "Human.h"
 
 @class HouseMD;
+@class Human;
+@class LiftBrain;
 
 @interface Lift : NSObject
 
 @property (nonatomic, weak) HouseMD* house;
-@property (nonatomic, readonly) NSUInteger currentFloor;
-@property (nonatomic, strong) NSMutableSet *peopleInLift;
+@property (nonatomic, strong) NSMutableArray *peopleInLift;
+@property (nonatomic, strong, readonly) LiftBrain *liftBrain;
 
 - (instancetype)initWithHouse:(HouseMD *)house;
-- (void)performStep;
-- (void)addHumanInLift:(Human *)newHuman;
 
+- (void)addHumanInLift:(Human *)newHuman;
 - (void)addRequest:(NSUInteger)requestFloor;
+- (void)performStep;
+
+- (NSUInteger)currentFloor;
+
+//  for lift brain
+- (NSUInteger)maxFloor;
 
 @end

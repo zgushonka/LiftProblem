@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class HouseMD;
+
 @interface Human : NSObject
 
 @property (nonatomic, readonly) NSUInteger sourceFloor;
 @property (nonatomic, readonly) NSUInteger targetFloor;
 
+- (instancetype)initInHouse:(HouseMD *)house;
 - (void)transferedAt:(NSUInteger)step;
 - (NSUInteger)transferTime;
 

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.house = [[HouseMD alloc] init];
+    
+    UIViewController *vc =  self.window.rootViewController;
+    
+    if ([vc isKindOfClass:[ViewController class]]) {
+        ViewController *myVc = (ViewController*) vc;
+        myVc.house = self.house;
+    }    
+    
     return YES;
 }
 

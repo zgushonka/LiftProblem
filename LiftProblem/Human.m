@@ -34,7 +34,7 @@
         do {
             int targetFloor = arc4random_uniform(maxFloor);
             self.targetFloor = targetFloor;
-        } while (self.targetFloor != self.sourceFloor);
+        } while (self.targetFloor == self.sourceFloor);
         
         self.createdAt = house.currentStep;        
         self.enteredLiftAt = 0;
