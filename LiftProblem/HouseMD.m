@@ -25,7 +25,6 @@ const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
         self.lift = [[Lift alloc] initWithHouse:self];
         self.currentStep = 0;
         
-        
         NSMutableArray *tempArray = [NSMutableArray array];
         for (int i=0; i < numberOfFloors; i++) {
             tempArray[i] = [NSMutableArray array];
@@ -37,7 +36,6 @@ const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
 
 - (void)performStep {
     [self generateNewPeople];
-    [self putPeopleToLift];
     [self.lift performStep];
     
     self.currentStep++;
@@ -53,14 +51,6 @@ const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
     
     //  add his request to the lift
     [self.lift addRequest:newHuman.sourceFloor];
-}
-
-- (void)putPeopleToLift {
-    NSMutableArray *peopleOnCurrentFloor = self.peopleOnFloors[self.lift.currentFloor];
-    for (Human *human in peopleOnCurrentFloor) {
-        [self.lift addHumanInLift:human];
-    }
-    [peopleOnCurrentFloor removeAllObjects];
 }
 
 - (void)humanGetToTargetFloor:(Human *)human {

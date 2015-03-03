@@ -7,20 +7,15 @@
 //
 
 #import "Lift.h"
-
-const NSUInteger Ground_Floor = 0;
+#import "LiftBrain.h"
 
 @interface Lift () {
-    BOOL goingUP;
-    BOOL goingDown;
-    
     NSUInteger highestTargetFloor;
     NSUInteger lowestTargetFloor;
 }
-@property (nonatomic, readwrite) NSUInteger currentFloor;
+@property (nonatomic) NSUInteger currentFloor;
 
-@property (nonatomic, strong) NSMutableSet *reqests;
-
+@property (nonatomic, strong) LiftBrain *liftBrain;
 @end
 
 
@@ -29,35 +24,57 @@ const NSUInteger Ground_Floor = 0;
 - (instancetype)initWithHouse:(HouseMD *)house {
     self = [super init];
     if (self) {
-        goingDown = NO;
-        goingUP = NO;
-        
-        highestTargetFloor = house.maxFloor;
-        lowestTargetFloor = Ground_Floor;
-        
-        self.currentFloor = Ground_Floor;
-        self.peopleInLift = [NSMutableSet set];
-        self.reqests = [NSMutableSet set];
         self.house = house;
+        self.liftBrain = [[LiftBrain alloc] initWithLift:self];
+        self.peopleInLift = [NSMutableArray array];
     }
     return  self;
 }
 
-- (void)addHumanInLift:(Human *)newHuman {
-    if (newHuman) {
-        [self.peopleInLift addObject:newHuman];
-        [self addRequest:newHuman.targetFloor];     // the human pressed target button in the lift
+- (void)performStep {
+    LiftAction nextAction = [self.liftBrain generteNextAction];
+    switch (nextAction) {
+        case LiftWait:
+            return;
+            break;
+        case LiftGoUp:
+            return;
+            break;
+        case LiftGoDown:
+            return;
+            break;
+        case LiftOpenDoor: {
+            [self popPeopleFromLift];
+            [self putPeopleToLift];
+        }
+            break;
+        default:
+            assert(@"Error: wrong lift state");
+            break;
     }
 }
 
+
+#pragma mark - Put People in lift
+- (void)putPeopleToLift {
+    NSMutableArray *peopleOnCurrentFloor = [self.house.peopleOnFloors objectAtIndex:self.liftBrain.currentFloor];
+    for (Human *human in peopleOnCurrentFloor) {
+        [self addHumanInLift:human];
+    }
+    [peopleOnCurrentFloor removeAllObjects];
+}
+
+- (void)addHumanInLift:(Human *)newHuman {
+    [self.peopleInLift addObject:newHuman];
+    [self addRequest:newHuman.targetFloor];     // the human pressed target button in the lift
+}
+
 - (void)addRequest:(NSUInteger)requestFloor {
-    [self.reqests addObject:@(requestFloor)];
+    [self.liftBrain addRequest:requestFloor];
 }
 
-- (void)performStep {
-    [self popPeopleFromLift];
-}
 
+#pragma mark - Pop People in lift
 - (void)popPeopleFromLift {
     NSArray *peopleInLift = [self.peopleInLift copy];
     for (Human *human in peopleInLift) {
@@ -66,54 +83,12 @@ const NSUInteger Ground_Floor = 0;
             [self.peopleInLift removeObject:human];
         }
     }
-    [self.reqests removeObject:@(self.currentFloor)];
 }
 
 
-
-//
-//- (void)makeMove {
-//    
-//    NSAssert( !(goingDown && goingUP), @"Error: lift direction error at %@:%@:%d ", NSStringFromClass([self class]), NSStringFromSelector(_cmd), __LINE__);
-//    
-//    if (goingUP) {
-//        if (self.currentFloor >= highestTargetFloor) {
-//            goingUP = NO;
-//        } else {
-//            self.currentFloor++;
-//        }
-//    }
-//    
-//    if (goingDown) {
-//        if (self.currentFloor <= lowestTargetFloor) {
-//            goingDown = NO;
-//        } else {
-//            self.currentFloor--;
-//        }
-//    }
-//}
-//
-//- (void)performStep:(NSUInteger)step {
-//    
-//    BOOL needStop = NO;
-//    for (Human *human in self.peopleInLift) {
-//        needStop = human.targetFloor == self.currentFloor;
-//        if (needStop) {
-//            break;
-//        }
-//    }
-//    
-//    
-//    if (needStop) {
-//        for (Human *human in self.peopleInLift) {
-//            human 
-//        }
-//        return; // waste step
-//    }
-//    
-//    
-//    
-//    [self makeMove];
-//}
+#pragma mark - Lift Brains
+- (NSUInteger)maxFloor {
+    return self.house.maxFloor;
+}
 
 @end

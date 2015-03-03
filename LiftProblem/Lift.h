@@ -15,13 +15,15 @@
 @interface Lift : NSObject
 
 @property (nonatomic, weak) HouseMD* house;
-@property (nonatomic, readonly) NSUInteger currentFloor;
-@property (nonatomic, strong) NSMutableSet *peopleInLift;
+@property (nonatomic, strong) NSMutableArray *peopleInLift;
 
 - (instancetype)initWithHouse:(HouseMD *)house;
-- (void)performStep;
-- (void)addHumanInLift:(Human *)newHuman;
 
+- (void)addHumanInLift:(Human *)newHuman;
 - (void)addRequest:(NSUInteger)requestFloor;
+- (void)performStep;
+
+//  for lift brain
+- (NSUInteger)maxFloor;
 
 @end

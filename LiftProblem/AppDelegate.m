@@ -7,9 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "HouseMD.h"
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong) HouseMD *house;
 @end
 
 @implementation AppDelegate
@@ -17,6 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.house = [[HouseMD alloc] init];
     return YES;
 }
 
