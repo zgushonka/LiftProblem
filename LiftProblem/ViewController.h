@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "HouseMD.h"
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, weak) HouseMD *house;
 
 @end
 

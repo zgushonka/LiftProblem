@@ -9,6 +9,7 @@
 #import "HouseMD.h"
 
 const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
+const NSInteger skipStep = 5; //  0 .. numberOfFloors-1
 
 
 @interface HouseMD ()
@@ -35,15 +36,22 @@ const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
 }
 
 - (void)performStep {
+    NSLog(@"\n");
     [self generateNewPeople];
     [self.lift performStep];
+    [Statistics showTextHouseStatistic:self];
     
     self.currentStep++;
+    
 }
 
 - (void)generateNewPeople {
+    if (self.currentStep%skipStep != 1) {
+        return;
+    }    
+    
     //  generate human
-    Human *newHuman = [[Human alloc] init];
+    Human *newHuman = [[Human alloc] initInHouse:self];
     
     //  add him to corresponding floor
     NSMutableArray *peopleOnNewHumanFloor = [self.peopleOnFloors objectAtIndex:newHuman.sourceFloor];

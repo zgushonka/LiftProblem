@@ -18,6 +18,7 @@
 		FF970BC01AA4F7ED0092583C /* Human.m in Sources */ = {isa = PBXBuildFile; fileRef = FF970BBF1AA4F7ED0092583C /* Human.m */; };
 		FF970BC31AA4FFAB0092583C /* Lift.m in Sources */ = {isa = PBXBuildFile; fileRef = FF970BC21AA4FFAB0092583C /* Lift.m */; };
 		FFBF45981AA5A657005646C3 /* LiftBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBF45971AA5A657005646C3 /* LiftBrain.m */; };
+		FFBF459C1AA5CE40005646C3 /* Statistics.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBF459B1AA5CE40005646C3 /* Statistics.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		FF970BC21AA4FFAB0092583C /* Lift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lift.m; sourceTree = "<group>"; };
 		FFBF45961AA5A657005646C3 /* LiftBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiftBrain.h; sourceTree = "<group>"; };
 		FFBF45971AA5A657005646C3 /* LiftBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiftBrain.m; sourceTree = "<group>"; };
+		FFBF459A1AA5CE40005646C3 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
+		FFBF459B1AA5CE40005646C3 /* Statistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Statistics.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 				FF970B9A1AA4E69B0092583C /* AppDelegate.m */,
 				FF970B9C1AA4E69B0092583C /* ViewController.h */,
 				FF970B9D1AA4E69B0092583C /* ViewController.m */,
+				FFBF459A1AA5CE40005646C3 /* Statistics.h */,
+				FFBF459B1AA5CE40005646C3 /* Statistics.m */,
 				FFBF45991AA5B377005646C3 /* Model */,
 				FF970B9F1AA4E69B0092583C /* Main.storyboard */,
 				FF970BA21AA4E69B0092583C /* Images.xcassets */,
@@ -249,6 +254,7 @@
 			files = (
 				FF970B9E1AA4E69B0092583C /* ViewController.m in Sources */,
 				FF970BBD1AA4F7720092583C /* HouseMD.m in Sources */,
+				FFBF459C1AA5CE40005646C3 /* Statistics.m in Sources */,
 				FF970BC31AA4FFAB0092583C /* Lift.m in Sources */,
 				FF970BC01AA4F7ED0092583C /* Human.m in Sources */,
 				FF970B9B1AA4E69B0092583C /* AppDelegate.m in Sources */,

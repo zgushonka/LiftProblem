@@ -10,6 +10,7 @@
 
 #import "Human.h"
 #import "Lift.h"
+#import "Statistics.h"
 
 @class Lift;
 
@@ -18,6 +19,8 @@
 @property (nonatomic, strong) Lift *lift;
 @property (nonatomic, readonly) NSUInteger currentStep;
 @property (nonatomic, strong) NSArray *peopleOnFloors;
+
+- (void)performStep;
 
 - (NSUInteger)numberOfFloors;
 - (NSUInteger)maxFloor;

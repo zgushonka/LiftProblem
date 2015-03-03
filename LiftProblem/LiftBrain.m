@@ -16,7 +16,7 @@ const NSUInteger Ground_Floor = 0;
 }
 
 @property (nonatomic, strong) Lift *lift;
-@property (nonatomic, strong) NSMutableSet *reqests;
+@property (nonatomic, strong, readwrite) NSMutableSet *reqests;
 @property (nonatomic, readwrite) NSUInteger currentFloor;
 @property (nonatomic) LiftAction currentAction;
 @end
@@ -47,37 +47,41 @@ const NSUInteger Ground_Floor = 0;
     LiftAction nextAction = lastAction;
     
     switch (lastAction) {
-        case LiftWait:
-            //  start moving
             
+        case LiftWait:
             //  if request - choose direction and start moving
+            if ([self requestExists]) {
+                nextAction = [self startMove];
+            }
             //  else keep waiting
             break;
+            
         case LiftGoUp:
-            //  if  request on current floor - open doors
+            self.currentFloor++;
             if ([self requestOnCurrentFloor]) {
                 nextAction = LiftOpenDoor;
             }
-            //  else keep moving
-            else {
-                //  increment current floor
-                self.currentFloor++;
-            }
+            //  else keep moving up
             break;
+            
         case LiftGoDown:
-            //  if  request on current floor - open doors
+            self.currentFloor--;
             if ([self requestOnCurrentFloor]) {
                 nextAction = LiftOpenDoor;
             }
-            //  else keep moving
-            else {
-                //  decrement current floor
-                self.currentFloor--;
-            }
+            //  else keep moving down
             break;
+            
         case LiftOpenDoor:
             //  if request - choose direction and start moving
             if ([self requestExists]) {
+                
+                BOOL startAfterWait = !goingUP && !goingDown;
+                if (startAfterWait) {
+                    nextAction = [self startMove];
+                    break;
+                }
+                
                 if (goingUP) {
                     if ([self needGoUp]) {
                         nextAction = LiftGoUp;
@@ -91,10 +95,11 @@ const NSUInteger Ground_Floor = 0;
                         }
                     }
                 }
-
+                
                 if (goingDown) {
                     if ([self needGoDown]) {
                         nextAction = LiftGoDown;
+                        break;
                     } else {
                         if ([self needGoUp]) {
                             goingUP = YES;
@@ -107,6 +112,8 @@ const NSUInteger Ground_Floor = 0;
             }
             else {
                 nextAction = LiftWait;
+                goingUP = NO;
+                goingDown = NO;
             }
             break;
             
@@ -121,6 +128,23 @@ const NSUInteger Ground_Floor = 0;
     
     self.currentAction = nextAction;
     return self.currentAction;
+}
+
+- (LiftAction)startMove {
+    if ([self requestOnCurrentFloor]) {
+        return LiftOpenDoor;
+    }
+    else if ([self needGoUp]) {
+        goingUP = YES;
+        goingDown = NO;
+        return LiftGoUp;
+    }
+    else if ([self needGoDown]) {
+        goingDown = YES;
+        goingUP = NO;
+        return LiftGoDown;
+    }
+    return LiftWait;
 }
 
 //  some button pressed

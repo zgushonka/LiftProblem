@@ -7,7 +7,10 @@
 //
 
 #import "Lift.h"
+#import "HouseMD.h"
+#import "Human.h"
 #import "LiftBrain.h"
+#import "Statistics.h"
 
 @interface Lift () {
     NSUInteger highestTargetFloor;
@@ -15,7 +18,7 @@
 }
 @property (nonatomic) NSUInteger currentFloor;
 
-@property (nonatomic, strong) LiftBrain *liftBrain;
+@property (nonatomic, strong, readwrite) LiftBrain *liftBrain;
 @end
 
 
@@ -33,6 +36,7 @@
 
 - (void)performStep {
     LiftAction nextAction = [self.liftBrain generteNextAction];
+    [Statistics showLiftAction:nextAction];
     switch (nextAction) {
         case LiftWait:
             return;
@@ -83,6 +87,12 @@
             [self.peopleInLift removeObject:human];
         }
     }
+}
+
+
+#pragma mark - statictics
+- (NSUInteger)currentFloor {
+    return self.liftBrain.currentFloor;
 }
 
 
