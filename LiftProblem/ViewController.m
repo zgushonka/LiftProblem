@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#define STEP_TIME 0.01
+#define STEP_TIME 0.001
 
 @interface ViewController ()
 
@@ -28,14 +28,17 @@
     [super viewWillAppear:animated];
     
     [self performStep];
+    [self showStatistic];
 }
 
 - (void)performStep {
     [self.house performStep];
-    
-    [self.statistics showTransferDelayBySourceFloor];
-
     [self performSelector:@selector(performStep) withObject:self afterDelay:STEP_TIME];
+}
+
+- (void)showStatistic {
+    [self.statistics showTransferDelayBySourceFloor];
+    [self performSelector:@selector(showStatistic) withObject:self afterDelay:2];
 }
 
 @end

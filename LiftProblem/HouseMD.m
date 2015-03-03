@@ -11,7 +11,7 @@
 #import "LiftBrain.h"
 
 const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
-const NSInteger skipStep = 8; //  0 .. numberOfFloors-1
+const NSInteger skipStep = 10; //  0 .. numberOfFloors-1
 
 @interface HouseMD ()
 
@@ -37,11 +37,8 @@ const NSInteger skipStep = 8; //  0 .. numberOfFloors-1
 }
 
 - (void)performStep {
-    NSLog(@"\n");
     [self generateNewPeople];
     [self.lift performStep];
-    [Statistics showTextHouseStatistic:self];
-
     self.currentStep++;
 }
 

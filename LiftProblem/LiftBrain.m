@@ -9,7 +9,7 @@
 #import "LiftBrain.h"
 #import "HouseMD.h"
 
-#define SKIP_HALF 0
+#define SKIP_HALF 1
 
 const NSUInteger Ground_Floor = 0;
 
@@ -189,9 +189,10 @@ const NSUInteger Ground_Floor = 0;
 }
 
 - (BOOL)shouldLiftStop {
-    BOOL upperHalf = self.currentFloor > ([self.lift.house numberOfFloors] / 2);
+    BOOL upperHalf = self.currentFloor-1 > ([self.lift.house numberOfFloors] / 2)-1;
+    BOOL lowerHalf = self.currentFloor+1 <= ([self.lift.house numberOfFloors] / 2)-1;
     if (goingDown) {
-        return upperHalf || ![self needGoDown];
+        return !lowerHalf || ![self needGoDown];
     }
     else if (goingUP) {
         return !upperHalf || ![self needGoUp];

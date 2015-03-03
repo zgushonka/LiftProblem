@@ -8,6 +8,8 @@
 
 #import "Statistics.h"
 #import "HouseMD.h"
+#import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 #define numberOfFloors 8
 
@@ -82,9 +84,12 @@
 }
 
 - (void)showTransferDelayBySourceFloor {
+    NSLog(@"\n");
+//    HouseMD *house = ( (AppDelegate *)[UIApplication sharedApplication].delegate).house;
+//    [Statistics showTextHouseStatistic:house];
     for (int i=numberOfFloors-1; i >= 0; i--) {
         float att = (float)humanTransferTime[i]/totalHumanOnFloor[i];
-        NSLog(@"ATT floor %d: %f", i, att);
+        NSLog(@"ATT floor %d: %f   total:%d", i, att, totalHumanOnFloor[i]);
     }
 }
 
