@@ -8,24 +8,34 @@
 
 #import "ViewController.h"
 
+#define STEP_TIME 0.01
+
 @interface ViewController ()
 
+@property (nonatomic, strong) Statistics *statistics;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.statistics = [Statistics sharedStatistics];
     // Do any additional setup after loading the view, typically from a nib.
 }
-
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    while (YES) {
-        [self.house performStep];
-    }
+    [self performStep];
+}
+
+- (void)performStep {
+    [self.house performStep];
+    
+    [self.statistics showTransferDelayBySourceFloor];
+
+    [self performSelector:@selector(performStep) withObject:self afterDelay:STEP_TIME];
 }
 
 @end

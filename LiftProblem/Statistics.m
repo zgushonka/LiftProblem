@@ -7,8 +7,38 @@
 //
 
 #import "Statistics.h"
+#import "HouseMD.h"
+
+#define numberOfFloors 8
+
+@interface Statistics () {
+    int humanTransferTime [numberOfFloors];
+    int totalHumanOnFloor [numberOfFloors];
+}
+
+@end
 
 @implementation Statistics
+
++ (instancetype)sharedStatistics {
+    static Statistics *sharedStatistics = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedStatistics = [[self alloc] init];
+    });
+    return sharedStatistics;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        for (int i=0; i < numberOfFloors; i++) {
+            humanTransferTime[i] = 0;
+            totalHumanOnFloor[i] = 0;
+        }
+    }
+    return self;
+}
 
 + (void)showTextHouseStatistic:(HouseMD *)house {
     for (int i=house.maxFloor; i >= 0; i--) {
@@ -16,10 +46,10 @@
         NSUInteger peopleCountOnFloor = peopleOnCurrentFloor.count;
         NSUInteger peopleInLift = house.lift.peopleInLift.count;
         NSString *reqested = [house.lift.liftBrain.reqests containsObject:@(i)] ? @"*" : @" ";
-        NSString *lift = (house.lift.currentFloor == i) ? [NSString stringWithFormat:@"X %lu", (unsigned long)peopleInLift] : @" ";
+        NSString *liftString = house.lift.liftBrain.currentAction == LiftOpenDoor ? @"O" : @"X";
+        NSString *lift = (house.lift.currentFloor == i) ? [NSString stringWithFormat:@"%@ %lu", liftString, (unsigned long)peopleInLift] : @" ";
         NSLog(@"floor %d: people: %lu requested:%@ - %@", i, (unsigned long)peopleCountOnFloor, reqested, lift);
     }
-    
     NSLog(@"current Step - %lu", (unsigned long)house.currentStep);
 }
 
@@ -45,5 +75,18 @@
     }
     NSLog(@"%@", liftActionString);
 }
+
+- (void)addHumanToStatistic:(Human *)human {
+    humanTransferTime[human.sourceFloor] += human.transferTime;
+    totalHumanOnFloor[human.sourceFloor]++;
+}
+
+- (void)showTransferDelayBySourceFloor {
+    for (int i=numberOfFloors-1; i >= 0; i--) {
+        float att = (float)humanTransferTime[i]/totalHumanOnFloor[i];
+        NSLog(@"ATT floor %d: %f", i, att);
+    }
+}
+
 
 @end

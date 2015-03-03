@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import "Human.h"
-#import "Lift.h"
 #import "Statistics.h"
 
 @class Lift;

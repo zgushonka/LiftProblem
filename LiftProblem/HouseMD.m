@@ -7,9 +7,10 @@
 //
 
 #import "HouseMD.h"
+#import "Lift.h"
 
 const NSInteger numberOfFloors = 8; //  0 .. numberOfFloors-1
-const NSInteger skipStep = 5; //  0 .. numberOfFloors-1
+const NSInteger skipStep = 3; //  0 .. numberOfFloors-1
 
 
 @interface HouseMD ()
@@ -41,8 +42,7 @@ const NSInteger skipStep = 5; //  0 .. numberOfFloors-1
     [self.lift performStep];
     [Statistics showTextHouseStatistic:self];
     
-    self.currentStep++;
-    
+    self.currentStep++;    
 }
 
 - (void)generateNewPeople {
@@ -64,6 +64,7 @@ const NSInteger skipStep = 5; //  0 .. numberOfFloors-1
 - (void)humanGetToTargetFloor:(Human *)human {
     [human transferedAt:self.currentStep];
     //  add human to statistic
+    [[Statistics sharedStatistics] addHumanToStatistic:human];
 }
 
 - (NSUInteger)maxFloor {

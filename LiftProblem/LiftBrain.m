@@ -18,7 +18,7 @@ const NSUInteger Ground_Floor = 0;
 @property (nonatomic, strong) Lift *lift;
 @property (nonatomic, strong, readwrite) NSMutableSet *reqests;
 @property (nonatomic, readwrite) NSUInteger currentFloor;
-@property (nonatomic) LiftAction currentAction;
+@property (nonatomic, readwrite) LiftAction currentAction;
 @end
 
 

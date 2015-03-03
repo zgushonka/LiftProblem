@@ -19,6 +19,7 @@ typedef enum : NSUInteger {
 
 @interface LiftBrain : NSObject
 
+@property (nonatomic, readonly) LiftAction currentAction;
 @property (nonatomic, readonly) NSUInteger currentFloor;
 @property (nonatomic, strong, readonly) NSMutableSet *reqests;
 

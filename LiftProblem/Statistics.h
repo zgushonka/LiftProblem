@@ -13,7 +13,11 @@
 
 @interface Statistics : NSObject
 
-+ (void)showTextHouseStatistic:(HouseMD *)house;
-+ (void)showLiftAction:(LiftAction)liftAction;
++ (instancetype)sharedStatistics;
 
++ (void)showTextHouseStatistic:(HouseMD *)house;
+//+ (void)showLiftAction:(LiftAction)liftAction;
+
+- (void)addHumanToStatistic:(Human *)human;
+- (void)showTransferDelayBySourceFloor;
 @end

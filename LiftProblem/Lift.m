@@ -36,7 +36,7 @@
 
 - (void)performStep {
     LiftAction nextAction = [self.liftBrain generteNextAction];
-    [Statistics showLiftAction:nextAction];
+//    [Statistics showLiftAction:nextAction];
     switch (nextAction) {
         case LiftWait:
             return;
